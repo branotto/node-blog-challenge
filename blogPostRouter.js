@@ -25,8 +25,12 @@ router.post('/', jsonParser, (req, res) => {
 
 });
 
-router.delete('/:id', (req, res) => {
 
+//DELETE request with an id in path will attempt to delete the blog post.
+router.delete('/:id', (req, res) => {
+    BlogPosts.delete(req.params.id);
+    console.log(`Deleted blog post ${req.params.id}`);
+    res.status(204).end();
 });
 
 router.put('/:id', jsonParser, (req, res) => {
