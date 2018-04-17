@@ -1,0 +1,23 @@
+{
+  "name": "blog-challenge",
+  "version": "1.0.0",
+  "description": "Thinkful Blog Challenge",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/branotto/node-blog-challenge.git"
+  },
+  "author": "Brandon Otto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/branotto/node-blog-challenge/issues"
+  },
+  "homepage": "https://github.com/branotto/node-blog-challenge#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
