@@ -64,8 +64,7 @@ describe('Blog Posts', function()
             {
                 title : 'Training for excellence',
                 author : 'Snape',
-                content : 'great content here',
-                publishDate : 1524107042023
+                content : 'great content here'
             };
         return chai.request(app)
         .post('/blog-posts')
@@ -77,7 +76,9 @@ describe('Blog Posts', function()
             expect(res.body).to.be.a('object');
             expect(res.body).to.include.keys('id', 'author', 'title', 'content', 'publishDate');
             expect(res.body.id).to.not.equal(null);
-            //expect(res.body).to.deep.equal(Object.assign(newPost, {id: res.body.id}));
+            expect(res.body.title).to.equal(newPost.title);
+            expect(res.body.author).to.equal(newPost.author);
+            expect(res.body.content).to.equal(newPost.content);
         });
     });
 
@@ -121,7 +122,7 @@ describe('Blog Posts', function()
         .then(function(res)
         {
             return chai.request(app)
-            .delete(`/blog-posts/$res.body[0].id}`);
+            .delete(`/blog-posts/${res.body[0].id}`);
         })
         .then(function(res)
         {
