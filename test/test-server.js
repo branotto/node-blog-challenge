@@ -81,5 +81,34 @@ describe('Blog Posts', function()
         });
     });
 
+    // test strategy
+    // 1. initialize updated blog post
+    // 2. request a blog post with GET
+    // 3. add the 'id' to our updated blog post
+    // 4. PUT request
+    // 5. inspect response object
+    it('should update blog posts on PUT', function()
+    {
+        const updatedBlog =
+        {
+            title : 'even better writing',
+            author : 'Batman',
+            content : 'mind blowing content'
+        };
+
+        return chai.request(app)
+        .get('/blog-posts')
+        .then(function(res)
+        {
+            updatedBlog.id = res.body[0].id;
+            return chai.request(app)
+            .put(`/blog-posts/${updatedBlog.id}`)
+            .send(updatedBlog);
+        })
+        .then(function(res)
+        {
+            expect(res).to.have.status(204);
+        });
+    });
 
 });
