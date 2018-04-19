@@ -27,9 +27,9 @@ describe('Blog Posts', function()
     });
 
 
-    //test strategy
-    //1. make request to '/blog-posts'
-    //2. inspect response object for correct code and keys
+    // test strategy
+    // 1. make request to '/blog-posts'
+    // 2. inspect response object for correct code and keys
     it('should list posts on GET', function()
     {
         //return a Promise object
@@ -55,6 +55,31 @@ describe('Blog Posts', function()
         });
     });
 
+    // test strategy
+    // 1. make a POST request with a new blog post
+    // 2. inspect rsponse object for status code and object w/ 'id'
+    it('should add a blog-post on POST', function()
+    {
+        const newPost = 
+            {
+                title : 'Training for excellence',
+                author : 'Snape',
+                content : 'great content here',
+                publishDate : 1524107042023
+            };
+        return chai.request(app)
+        .post('/blog-posts')
+        .send(newPost)
+        .then(function(res)
+        {
+            expect(res).to.have.status(201);
+            expect(res).to.be.json;
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.include.keys('id', 'author', 'title', 'content', 'publishDate');
+            expect(res.body.id).to.not.equal(null);
+            //expect(res.body).to.deep.equal(Object.assign(newPost, {id: res.body.id}));
+        });
+    });
 
 
 });
