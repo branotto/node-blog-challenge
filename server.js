@@ -19,6 +19,53 @@ app.use(morgan('common'));
 app.use('/blog-posts', blogPostRouter);
 
 
-app.listen(process.env.PORT || 8080, () => {
-    console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
+//create a server object
+let server;
+
+
+//start the server and return a Promise
+function runServer()
+{
+  const port = process.env.PORT || 8080;
+
+  return new Promise((resolve, reject) =>
+  {
+    server = app.listen(port, () =>
+    {
+      console.log(`Your app is listening on port ${port}`);
+      resolve(server);
+    }).on('error', err =>
+      {
+        reject(err)
+      });
   });
+}
+
+//close the server and manually return a promise
+function closeServer()
+{
+  return new Promise((resolve, reject) =>
+  {
+    console.log(`Closing server`);
+    server.close(err =>
+      {
+        if (err) 
+        {
+          reject(err)
+          return;
+        }
+
+        resolve();
+      });
+  });
+}
+
+
+// if server.js is called directly this block runs
+// we also export the runServer command so other code 
+//(for instance, test code) can start the server as needed.
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+};
+
+module.exports = {app, runServer, closeServer};
